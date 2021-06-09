@@ -20,9 +20,9 @@ class Listing(models.Model):
 #
 class Bid(models.Model):
     bidder = models.ForeignKey(User, on_delete=models.CASCADE)
-    listing = models.ForeignKey(Listing, on_delete=models.CASADE)
+    listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
     bid = models.DecimalField(max_digits=20, decimal_places=2)
-    winning_bid = status = models.BooleanField(default=FALSE)
+    winner = models.BooleanField(default=False)
 
     def __str__(self):
         return f'Bid by {self.bidder} for {self.listing} at {self.bid}'

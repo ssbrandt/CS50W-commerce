@@ -87,7 +87,9 @@ def create_listing(request):
 
     return render(request, "auctions/createlisting.html", context)
 
-# def active_listings(request):
-#     active_listings = Listing.objects.filter(status=True)
-#     context = {'active_listings': active_listings}
-#     return render(request, 'auctions/activelistings.html', context)
+def view_listing(request, listing_id):
+
+    listing = Listing.objects.get(id=listing_id)
+    context = {'listing':listing}
+
+    return render(request, "auctions/listing.html", context)
