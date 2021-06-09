@@ -4,10 +4,23 @@
     <h2>Active Listings</h2>
 
     {% for listing in active_listings %}
-    <p>{{listing.title}}</p>
-    <p>{{listing.description}}</p>
-    <p>{{listing.starting_bid}}</p>
-    <p>{{listing.listing_image}}</p>
-    <p>{{listing.category}}</p>
-    {% endfor %}
+    <div class="card" style="width: 18rem;">
+      <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
+      <div class="card-body">
+      <h5 class="card-title">{{listing.title}}</h5>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class='list-group-item'>{{listing.description}}</li>
+        <li class="list-group-item">{{listing.starting_bid}}</li>
+        <li class="list-group-item">{{listing.category}}</li>
+      </ul>
+      <div class="card-body">
+        <a href="#" class="card-link">Add to Wishlist</a>
+        <a href="#" class="card-link">Another link</a>
+        <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+      </div>
+
+  </div>
+  {% endfor %}
+
 {% endblock %}
