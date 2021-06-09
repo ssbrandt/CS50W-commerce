@@ -1,0 +1,23 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Listing {{listing.Title}}</h2>
+
+    <div class="card" style="width: 18rem;">
+      <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
+      <div class="card-body">
+      <h5 class="card-title">{{listing.title}}</h5>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class='list-group-item'>{{listing.description}}</li>
+        <li class="list-group-item">{{listing.starting_bid}}</li>
+        <li class="list-group-item">{{listing.category}}</li>
+      </ul>
+      <!-- <div class="card-body">
+        <a href="#" class="card-link">Add to Wishlist</a>
+        <a href="#" class="card-link">Another link</a>
+        <a href="#" class="stretched-link"></a>
+        </div> -->
+    </div>
+
+{% endblock %}
