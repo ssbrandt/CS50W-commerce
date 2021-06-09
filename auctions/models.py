@@ -23,5 +23,9 @@ class Bid(models.Model):
     listing = models.ForeignKey(Listing, on_delete=models.CASADE)
     bid = models.DecimalField(max_digits=20, decimal_places=2)
     winning_bid = status = models.BooleanField(default=FALSE)
+
+    def __str__(self):
+        return f'Bid by {self.bidder} for {self.listing} at {self.bid}'
+
 # class Comment(models.Model):
 #     pass
