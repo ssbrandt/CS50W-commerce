@@ -18,8 +18,10 @@ class Listing(models.Model):
     def __str__(self):
         return f'Listing {self.id}: {self.title}'
 #
-# class Bid(models.Model):
-#     pass
-#
+class Bid(models.Model):
+    bidder = models.ForeignKey(User, on_delete=models.CASCADE)
+    listing = models.ForeignKey(Listing, on_delete=models.CASADE)
+    bid = models.DecimalField(max_digits=20, decimal_places=2)
+    winning_bid = status = models.BooleanField(default=FALSE)
 # class Comment(models.Model):
 #     pass
