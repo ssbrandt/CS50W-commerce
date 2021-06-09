@@ -9,7 +9,9 @@ from .forms import ListingForm
 
 
 def index(request):
-    return render(request, "auctions/index.html")
+    active_listings = Listing.objects.filter(status=True)
+    context = {'active_listings': active_listings}
+    return render(request, "auctions/index.html", context)
 
 
 def login_view(request):
@@ -65,12 +67,27 @@ def register(request):
 
 
 def create_listing(request):
-    if request.method == "POST":
-        # will need to validate form and save.
-        pass
 
     form = ListingForm()
 
+    if request.method == "POST":
+        # will need to validate form and save.
+        form = ListingForm(request.POST)
+        creator = request.user
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.creator = creator
+            form.save()
+            return render(request, "auctions/index.html")
+        else:
+            #should add in error handling and return data back to form
+            form = ListingForm()
+
     context = {'form': form}
-    
+
     return render(request, "auctions/createlisting.html", context)
+
+# def active_listings(request):
+#     active_listings = Listing.objects.filter(status=True)
+#     context = {'active_listings': active_listings}
+#     return render(request, 'auctions/activelistings.html', context)

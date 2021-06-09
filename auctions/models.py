@@ -12,6 +12,7 @@ class Listing(models.Model):
     listing_image = models.CharField(max_length=200, null=True, blank=True)
     category = models.CharField(max_length=100, null=True, blank=True)
     status = models.BooleanField(default=True)
+    creator = models.ForeignKey(User, on_delete=models.CASCADE)
     # need to add relationship to User
 
     def __str__(self):

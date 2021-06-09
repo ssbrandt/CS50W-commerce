@@ -6,4 +6,4 @@ class ListingForm(forms.ModelForm):
 
     class Meta:
         model = Listing
-        exclude = ['status']
+        exclude = ['status', 'creator']
