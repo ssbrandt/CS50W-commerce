@@ -31,6 +31,11 @@ class Bid(models.Model):
     class Meta:
         get_latest_by = 'bid'
 
-        
-# class Comment(models.Model):
-#     pass
+
+class Comment(models.Model):
+    commenter = models.ForeignKey(User, on_delete=models.CASCADE)
+    listing = models.ForeignKey(Listing, on_delete=mdoels.CASCADE)
+    comment = models.TextField()
+
+    def __str__(self):
+        return f'Comment #{self.id} on {self.listing} by {self.commenter}'
