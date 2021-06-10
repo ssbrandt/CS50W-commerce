@@ -27,5 +27,8 @@ class Bid(models.Model):
     def __str__(self):
         return f'Bid by {self.bidder} for {self.listing} at {self.bid}'
 
+    #supports finding the max bid by using the latest field which returns the max bid
+    class Meta:
+        get_latest_by = 'bid'
 # class Comment(models.Model):
 #     pass

@@ -106,8 +106,10 @@ def bid(request, listing_id):
         form.bidder = request.user
         form.listing = Listing.objects.get(id=listing_id)
         starting_bid = Listing.objects.get(id=listing_id).starting_bid
-        if form.bid >= starting_bid:
+        max_bid = Bid.objects.filter(listing=listing_id).latest().bid
+
+        if form.bid >= starting_bid and form.bid > max_bid:
             form.save()
-            return redirect('index')
+            return HttpResponseRedirect(reverse("listing", args=(listing_id,)))
         else:
             print("caught error")
