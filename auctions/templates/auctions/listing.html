@@ -22,6 +22,12 @@
         <input type="submit" value="Place Bid">
       </form>
 
+      <form class="" action="{% url 'add_comment' listing.id %}" method="post">
+        {% csrf_token %}
+        {{comment_form.as_p}}
+        <input type="submit" value="Add Comment">
+      </form>
+
 
     </div>
 

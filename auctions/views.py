@@ -4,8 +4,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import User, Listing, Bid
-from .forms import ListingForm, BidForm
+from .models import User, Listing, Bid, Comment
+from .forms import ListingForm, BidForm, CommentForm
 
 
 def index(request):
@@ -91,7 +91,8 @@ def view_listing(request, listing_id):
 
     listing = Listing.objects.get(id=listing_id)
     bid_form = BidForm()
-    context = {'listing':listing, 'bid_form':bid_form}
+    comment_form = CommentForm()
+    context = {'listing':listing, 'bid_form':bid_form, 'comment_form':comment_form}
 
     return render(request, "auctions/listing.html", context)
 
