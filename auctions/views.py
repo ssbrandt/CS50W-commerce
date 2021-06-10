@@ -112,4 +112,8 @@ def bid(request, listing_id):
             form.save()
             return HttpResponseRedirect(reverse("listing", args=(listing_id,)))
         else:
-            print("caught error")
+            form = BidForm(request.POST)
+            listing = Listing.objects.get(id=listing_id)
+            message = 'Bid must be greater than or equal to starting bid and higher then current bid.'
+            context = {'form': form, 'listing':listing, 'message':message}
+            return render(request, "auctions/listing.html", context)

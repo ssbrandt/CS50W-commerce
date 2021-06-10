@@ -2,6 +2,9 @@
 
 {% block body %}
     <h2>Listing {{listing.Title}}</h2>
+    {% if message %}
+        <div>{{ message }}</div>
+    {% endif %}
 
     <div class="card" style="width: 18rem;">
       <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
