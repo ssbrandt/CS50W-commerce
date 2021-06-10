@@ -96,7 +96,7 @@ def view_listing(request, listing_id):
     return render(request, "auctions/listing.html", context)
 
 def bid(request, listing_id):
-    
+
     if request.method == 'POST':
         form = BidForm(request.POST)
         form = form.save(commit=False)
@@ -114,3 +114,6 @@ def bid(request, listing_id):
             message = 'Bid must be greater than or equal to starting bid and higher then current bid.'
             context = {'form': form, 'listing':listing, 'message':message}
             return render(request, "auctions/listing.html", context)
+
+def add_comment(request, listing_id):
+    pass
