@@ -13,7 +13,7 @@
         <li class="list-group-item">{{listing.starting_bid}}</li>
         <li class="list-group-item">{{listing.category}}</li>
       </ul>
-      <form class="" action="" method="post">
+      <form class="" action="{% url 'bid' listing.id %}" method="post">
         {% csrf_token %}
         {{form.as_p}}
         <input type="submit" value="Place Bid">
