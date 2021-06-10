@@ -12,4 +12,4 @@ class BidForm(forms.ModelForm):
 
     class Meta:
         model = Bid
-        exclude = ['bidder', 'listing', 'winning_bid']
+        exclude = ['bidder', 'listing', 'winner']

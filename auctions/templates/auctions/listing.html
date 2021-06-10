@@ -13,6 +13,11 @@
         <li class="list-group-item">{{listing.starting_bid}}</li>
         <li class="list-group-item">{{listing.category}}</li>
       </ul>
+      <form class="" action="" method="post">
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type="submit" value="Place Bid">
+      </form>
       <!-- <div class="card-body">
         <a href="#" class="card-link">Add to Wishlist</a>
         <a href="#" class="card-link">Another link</a>
