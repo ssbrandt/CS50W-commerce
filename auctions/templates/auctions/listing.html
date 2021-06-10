@@ -18,11 +18,11 @@
       </ul>
       <form class="" action="{% url 'bid' listing.id %}" method="post">
         {% csrf_token %}
-        {{form.as_p}}
+        {{bid_form.as_p}}
         <input type="submit" value="Place Bid">
       </form>
 
-      
+
     </div>
 
 {% endblock %}

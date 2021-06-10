@@ -34,7 +34,7 @@ class Bid(models.Model):
 
 class Comment(models.Model):
     commenter = models.ForeignKey(User, on_delete=models.CASCADE)
-    listing = models.ForeignKey(Listing, on_delete=mdoels.CASCADE)
+    listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
     comment = models.TextField()
 
     def __str__(self):

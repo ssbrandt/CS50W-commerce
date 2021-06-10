@@ -90,8 +90,8 @@ def create_listing(request):
 def view_listing(request, listing_id):
 
     listing = Listing.objects.get(id=listing_id)
-    form = BidForm()
-    context = {'listing':listing, 'form':form}
+    bid_form = BidForm()
+    context = {'listing':listing, 'bid_form':bid_form}
 
     return render(request, "auctions/listing.html", context)
 
