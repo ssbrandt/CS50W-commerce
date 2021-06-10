@@ -96,10 +96,7 @@ def view_listing(request, listing_id):
     return render(request, "auctions/listing.html", context)
 
 def bid(request, listing_id):
-    #if request is post, then take bid and see if it's greater or equal to starting bid and max current bid
-    # if so save bid
-    # if not return error message
-
+    
     if request.method == 'POST':
         form = BidForm(request.POST)
         form = form.save(commit=False)
