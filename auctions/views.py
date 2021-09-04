@@ -117,4 +117,12 @@ def bid(request, listing_id):
             return render(request, "auctions/listing.html", context)
 
 def add_comment(request, listing_id):
-    pass
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        form = form.save(commit=False)
+        form.commenter = request.user
+        form.listing = Listing.objects.get(id=listing_id)
+
+        form.save()
+        return HttpResponseRedirect(reverse("listing", args=(listing_id,)))
