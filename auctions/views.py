@@ -93,7 +93,8 @@ def view_listing(request, listing_id):
     current_bid = Bid.objects.filter(listing=listing_id).latest().bid
     bid_form = BidForm()
     comment_form = CommentForm()
-    context = {'listing':listing, 'current_bid':current_bid, 'bid_form':bid_form, 'comment_form':comment_form}
+    comments = Comment.objects.filter(listing=listing_id)
+    context = {'listing':listing, 'current_bid':current_bid, 'bid_form':bid_form, 'comment_form':comment_form, 'comments':comments}
 
     return render(request, "auctions/listing.html", context)
 
