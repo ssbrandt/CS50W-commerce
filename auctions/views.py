@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import User, Listing, Bid, Comment
+from .models import User, Listing, Bid, Comment, Watchlist
 from .forms import ListingForm, BidForm, CommentForm
 
 
@@ -128,3 +128,12 @@ def add_comment(request, listing_id):
 
         form.save()
         return HttpResponseRedirect(reverse("listing", args=(listing_id,)))
+
+def add_watchlist(request, listing_id):
+
+    watchlist = Watchlist()
+    watchlist.user = request.user
+    watchlist.listing = Listing.objects.get(id=listing_id)
+    watchlist.save()
+
+    return HttpResponseRedirect(reverse("listing", args=(listing_id,)))
