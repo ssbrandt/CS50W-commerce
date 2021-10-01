@@ -137,3 +137,9 @@ def add_watchlist(request, listing_id):
     watchlist.save()
 
     return HttpResponseRedirect(reverse("listing", args=(listing_id,)))
+
+def remove_watchlist(request, listing_id):
+    watchlist = Watchlist.objects.filter(listing= Listing.objects.get(id=listing_id)).filter(user=request.user)
+    watchlist.delete()
+
+    return HttpResponseRedirect(reverse("listing", args=(listing_id,)))

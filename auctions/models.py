@@ -43,3 +43,6 @@ class Comment(models.Model):
 class Watchlist(models.Model):
     user = models.OneToOneField(User, related_name='watchlist', on_delete=models.CASCADE)
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.user}:{self.listing}'
