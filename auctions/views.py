@@ -143,3 +143,14 @@ def remove_watchlist(request, listing_id):
     watchlist.delete()
 
     return HttpResponseRedirect(reverse("listing", args=(listing_id,)))
+
+def view_watchlist(request):
+    watchlist = Watchlist.objects.filter(user = request.user).values_list('listing', flat=True)
+    watchlist_details = []
+    print(watchlist)
+    for item in watchlist:
+        watchlist_details.append(Listing.objects.get(id=item))
+
+    context = {'watchlist':watchlist_details}
+
+    return render(request, "auctions/watchlist.html", context)
