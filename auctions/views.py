@@ -147,10 +147,19 @@ def remove_watchlist(request, listing_id):
 def view_watchlist(request):
     watchlist = Watchlist.objects.filter(user = request.user).values_list('listing', flat=True)
     watchlist_details = []
-    print(watchlist)
+
     for item in watchlist:
         watchlist_details.append(Listing.objects.get(id=item))
 
     context = {'watchlist':watchlist_details}
 
     return render(request, "auctions/watchlist.html", context)
+
+def view_category(request):
+    categories = set(Listing.objects.filter(category__isnull=False).values_list('category', flat=True))
+    context = {'categories':categories}
+
+    return render(request, 'auctions/category.html', context)
+
+def view_category_items():
+    pass
