@@ -161,5 +161,8 @@ def view_category(request):
 
     return render(request, 'auctions/category.html', context)
 
-def view_category_items():
-    pass
+def view_category_items(request, category):
+    listings = Listing.objects.filter(category=category)
+    context = {'listings': listings, 'category':category}
+
+    return render(request, 'auctions/category_items.html', context)
