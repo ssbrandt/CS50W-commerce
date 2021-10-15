@@ -13,6 +13,9 @@
         <li class='list-group-item'>{{listing.description}}</li>
         <li class="list-group-item">{{listing.starting_bid}}</li>
         <li class="list-group-item">{{listing.category}}</li>
+        {% if listing.listing_image %}
+        <li><img src={{listing.listing_image}}></li>
+        {% endif %}
       </ul>
       <div class="card-body">
         <a href="#" class="card-link">Link</a>
