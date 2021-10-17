@@ -23,11 +23,13 @@
         <li class="list-group-item">{{comment}}</li>
         {% endfor %}
       </ul>
+      {% if listing.creator != creator %}
       <form class="" action="{% url 'bid' listing.id %}" method="post">
         {% csrf_token %}
         {{bid_form.as_p}}
         <input type="submit" value="Place Bid">
       </form>
+      {% endif %}
 
       <form class="" action="{% url 'add_comment' listing.id %}" method="post">
         {% csrf_token %}
