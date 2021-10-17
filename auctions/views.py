@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
@@ -7,7 +8,7 @@ from django.urls import reverse
 from .models import User, Listing, Bid, Comment, Watchlist
 from .forms import ListingForm, BidForm, CommentForm
 
-
+@login_required(login_url='login')
 def index(request):
     active_listings = Listing.objects.filter(status=True)
     context = {'active_listings': active_listings}
@@ -65,7 +66,7 @@ def register(request):
     else:
         return render(request, "auctions/register.html")
 
-
+@login_required(redirect_field_name='login')
 def create_listing(request):
 
     form = ListingForm()
@@ -87,6 +88,7 @@ def create_listing(request):
 
     return render(request, "auctions/createlisting.html", context)
 
+@login_required(login_url='login')
 def view_listing(request, listing_id):
 
     listing = Listing.objects.get(id=listing_id)
@@ -98,6 +100,7 @@ def view_listing(request, listing_id):
 
     return render(request, "auctions/listing.html", context)
 
+@login_required(login_url='login')
 def bid(request, listing_id):
 
     if request.method == 'POST':
@@ -118,6 +121,7 @@ def bid(request, listing_id):
             context = {'form': form, 'listing':listing, 'message':message}
             return render(request, "auctions/listing.html", context)
 
+@login_required(login_url='login')
 def add_comment(request, listing_id):
 
     if request.method == 'POST':
@@ -129,6 +133,7 @@ def add_comment(request, listing_id):
         form.save()
         return HttpResponseRedirect(reverse("listing", args=(listing_id,)))
 
+@login_required(login_url='login')
 def add_watchlist(request, listing_id):
 
     watchlist = Watchlist()
@@ -138,12 +143,14 @@ def add_watchlist(request, listing_id):
 
     return HttpResponseRedirect(reverse("listing", args=(listing_id,)))
 
+@login_required(login_url='login')
 def remove_watchlist(request, listing_id):
     watchlist = Watchlist.objects.filter(listing= Listing.objects.get(id=listing_id)).filter(user=request.user)
     watchlist.delete()
 
     return HttpResponseRedirect(reverse("listing", args=(listing_id,)))
 
+@login_required(login_url='login')
 def view_watchlist(request):
     watchlist = Watchlist.objects.filter(user = request.user).values_list('listing', flat=True)
     watchlist_details = []
@@ -155,12 +162,14 @@ def view_watchlist(request):
 
     return render(request, "auctions/watchlist.html", context)
 
+@login_required(login_url='login')
 def view_category(request):
     categories = set(Listing.objects.filter(category__isnull=False).values_list('category', flat=True))
     context = {'categories':categories}
 
     return render(request, 'auctions/category.html', context)
 
+@login_required(login_url='login')
 def view_category_items(request, category):
     listings = Listing.objects.filter(category=category)
     context = {'listings': listings, 'category':category}
