@@ -175,3 +175,15 @@ def view_category_items(request, category):
     context = {'listings': listings, 'category':category}
 
     return render(request, 'auctions/category_items.html', context)
+
+def close_auction(request, listing_id):
+    #set status of listing to close (false)
+    listing = Listing.objects.get(id=listing_id)
+    listing.status = False
+    listing.save()
+    #set winner to true for bid
+    winning_bid = Bid.objects.filter(listing=listing_id).latest()
+    winning_bid.winner = True
+    winning_bid.save()
+
+    return HttpResponseRedirect(reverse("listing", args=(listing_id,)))

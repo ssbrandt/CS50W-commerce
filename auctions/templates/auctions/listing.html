@@ -31,6 +31,10 @@
       </form>
       {% endif %}
 
+      {% if listing.creator == creator %}
+        <a href="{% url 'close_auction' listing.id %}">Close Auction</a>
+      {% endif %}
+
       <form class="" action="{% url 'add_comment' listing.id %}" method="post">
         {% csrf_token %}
         {{comment_form.as_p}}

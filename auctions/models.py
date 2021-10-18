@@ -11,9 +11,10 @@ class Listing(models.Model):
     starting_bid = models.DecimalField(max_digits=20, decimal_places=2)
     listing_image = models.CharField(max_length=200, null=True, blank=True)
     category = models.CharField(max_length=100, null=True, blank=True)
+    # status=True for open auction, status=False for closed auction
     status = models.BooleanField(default=True)
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
-    # need to add relationship to User
+    # need to add winning user field
 
     def __str__(self):
         return f'Listing {self.id}: {self.title}'
