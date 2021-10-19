@@ -79,7 +79,8 @@ def create_listing(request):
             form = form.save(commit=False)
             form.creator = creator
             form.save()
-            return render(request, "auctions/index.html")
+            return HttpResponseRedirect(reverse("index"))
+            
         else:
             #should add in error handling and return data back to form
             form = ListingForm()
@@ -104,7 +105,6 @@ def view_listing(request, listing_id):
     comment_form = CommentForm()
     comments = Comment.objects.filter(listing=listing_id)
     context = {'listing':listing, 'current_bid':current_bid, 'bid_status':bid_status, 'winner':winner, 'bid_form':bid_form, 'comment_form':comment_form, 'comments':comments, 'creator':request.user}
-    # context = {'listing':listing, 'current_bid':current_bid, 'bid_form':bid_form, 'comment_form':comment_form, 'comments':comments, 'creator':request.user}
 
     return render(request, "auctions/listing.html", context)
 
