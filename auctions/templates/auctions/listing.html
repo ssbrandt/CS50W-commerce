@@ -14,7 +14,14 @@
       <ul class="list-group list-group-flush">
         <li class='list-group-item'>Description: {{listing.description}}</li>
         <li class="list-group-item">Starting Bid: {{listing.starting_bid}}</li>
+        {% if bid_status == False %}
+        <li class='list-group-item'>Auction Open</li>
         <li class='list-group-item'>Current Bid: {{current_bid}}</li>
+        {% else %}
+        <li class='list-group-item'>Auction Closed</li>
+        <li class='list-group-item'>Winning Bid: {{current_bid}}</li>
+        <li class='list-group-item'>Congratulations: {{winner}}</li>
+        {% endif %}
         <li class="list-group-item">Category: {{listing.category}}</li>
         {% if listing.listing_image %}
         <li><img src={{listing.listing_image}}></li>
@@ -23,7 +30,7 @@
         <li class="list-group-item">{{comment}}</li>
         {% endfor %}
       </ul>
-      {% if listing.creator != creator %}
+      {% if listing.creator != creator and bid.status == False %}
       <form class="" action="{% url 'bid' listing.id %}" method="post">
         {% csrf_token %}
         {{bid_form.as_p}}

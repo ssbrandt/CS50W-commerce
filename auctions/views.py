@@ -93,10 +93,12 @@ def view_listing(request, listing_id):
 
     listing = Listing.objects.get(id=listing_id)
     current_bid = Bid.objects.filter(listing=listing_id).latest().bid
+    bid_status = Bid.objects.filter(listing=listing_id).latest().winner
+    winner = Bid.objects.filter(listing=listing_id).latest().bidder
     bid_form = BidForm()
     comment_form = CommentForm()
     comments = Comment.objects.filter(listing=listing_id)
-    context = {'listing':listing, 'current_bid':current_bid, 'bid_form':bid_form, 'comment_form':comment_form, 'comments':comments, 'creator':request.user}
+    context = {'listing':listing, 'current_bid':current_bid, 'bid_status':bid_status, 'winner':winner, 'bid_form':bid_form, 'comment_form':comment_form, 'comments':comments, 'creator':request.user}
 
     return render(request, "auctions/listing.html", context)
 
@@ -176,6 +178,7 @@ def view_category_items(request, category):
 
     return render(request, 'auctions/category_items.html', context)
 
+@login_required(login_url='login')
 def close_auction(request, listing_id):
     #set status of listing to close (false)
     listing = Listing.objects.get(id=listing_id)
