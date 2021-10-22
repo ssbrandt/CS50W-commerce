@@ -12,6 +12,9 @@
       <h5 class="card-title">{{listing.title}}</h5>
       </div>
       <ul class="list-group list-group-flush">
+        {% if listing.listing_image %}
+        <li><img src={{listing.listing_image}} class="card-img-top"></li>
+        {% endif %}
         <li class='list-group-item'>Description: {{listing.description}}</li>
         <li class="list-group-item">Starting Bid: {{listing.starting_bid}}</li>
         {% if bid_status == False %}
@@ -23,9 +26,7 @@
         <li class='list-group-item'>Congratulations: {{winner}}</li>
         {% endif %}
         <li class="list-group-item">Category: {{listing.category}}</li>
-        {% if listing.listing_image %}
-        <li><img src={{listing.listing_image}}></li>
-        {% endif %}
+
         {% for comment in comments%}
         <li class="list-group-item">{{comment}}</li>
         {% endfor %}
