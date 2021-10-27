@@ -80,7 +80,7 @@ def create_listing(request):
             form.creator = creator
             form.save()
             return HttpResponseRedirect(reverse("index"))
-            
+
         else:
             #should add in error handling and return data back to form
             form = ListingForm()
@@ -94,17 +94,19 @@ def view_listing(request, listing_id):
 
     listing = Listing.objects.get(id=listing_id)
     if Bid.objects.filter(listing=listing.id):
-        current_bid = Bid.objects.filter(listing=listing_id).latest().bid
-        bid_status = Bid.objects.filter(listing=listing_id).latest().winner
-        winner = Bid.objects.filter(listing=listing_id).latest().bidder
+        current_bid = Bid.objects.filter(listing=listing_id).latest()
     else:
-        current_bid = "No Bids"
-        bid_status = False
-        winner = None
+        current_bid = None
     bid_form = BidForm()
     comment_form = CommentForm()
     comments = Comment.objects.filter(listing=listing_id)
-    context = {'listing':listing, 'current_bid':current_bid, 'bid_status':bid_status, 'winner':winner, 'bid_form':bid_form, 'comment_form':comment_form, 'comments':comments, 'creator':request.user}
+
+    if Watchlist.objects.filter(user = request.user).filter(listing = listing):
+        on_watchlist = True
+    else:
+        on_watchlist = False
+
+    context = {'listing':listing, 'current_bid':current_bid, 'bid_form':bid_form, 'comment_form':comment_form, 'comments':comments, 'on_watchlist':on_watchlist}
 
     return render(request, "auctions/listing.html", context)
 

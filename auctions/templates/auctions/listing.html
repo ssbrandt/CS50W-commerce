@@ -1,58 +1,86 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-    <h2>Listing {{listing.Title}}</h2>
+
     {% if message %}
         <div>{{ message }}</div>
     {% endif %}
+      <div class="card my-2">
+        <div class="card-body bg-info text-white" >
+        <h5 class="card-title">{{listing.title}}</h5>
+        <p class='card-text'>{{listing.description}}</p>
+        </div>
+        <ul class="list-group list-group-flush ">
+          <li class="list-group-item">Category: {{listing.category}}</li>
+          {% if listing.listing_image %}
+          <img src={{listing.listing_image}} class="card-img-top">
+          {% endif %}
+          {% if on_watchlist == False %}
+          <a href="{% url 'add_watchlist' listing.id %}" class="btn btn-secondary">Add to Watchlist</a>
+          {% else %}
+          <a href="{% url 'remove_watchlist' listing.id %}" class="btn btn-secondary">Remove from Watchlist</a>
+          {% endif %}
 
-    <div class="card" style="width: 18rem;">
-      <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
-      <div class="card-body">
-      <h5 class="card-title">{{listing.title}}</h5>
-      </div>
-      <ul class="list-group list-group-flush">
-        {% if listing.listing_image %}
-        <li><img src={{listing.listing_image}} class="card-img-top"></li>
-        {% endif %}
-        <li class='list-group-item'>Description: {{listing.description}}</li>
-        <li class="list-group-item">Starting Bid: {{listing.starting_bid}}</li>
-        {% if bid_status == False %}
-        <li class='list-group-item'>Auction Open</li>
-        <li class='list-group-item'>Current Bid: {{current_bid}}</li>
-        {% else %}
-        <li class='list-group-item'>Auction Closed</li>
-        <li class='list-group-item'>Winning Bid: {{current_bid}}</li>
-        <li class='list-group-item'>Congratulations: {{winner}}</li>
-        {% endif %}
-        <li class="list-group-item">Category: {{listing.category}}</li>
+        </ul>
+        </div>
+        <div class="card my-2">
+        <div class="card-body bg-info text-white">
+        <h5 class="card-title">Bids</h5>
+        </div>
+        <ul class="list-group list-group-flush ">
+          <li class="list-group-item">Starting Bid: {{listing.starting_bid}}</li>
+          {% if current_bid.winner == True %}
+          <li class='list-group-item'>Auction Closed</li>
+          <li class='list-group-item'>Winning Bid: {{current_bid.bid}}</li>
+          <li class='list-group-item'>Congratulations: {{current_bid.bidder}}</li>
 
-        {% for comment in comments%}
-        <li class="list-group-item">{{comment}}</li>
+          {% elif current_bid == None %}
+          <li class='list-group-item'>Auction Open</li>
+          <li class='list-group-item'>Current Bid: No existing bids </li>
+
+          {% else %}
+          <li class='list-group-item'>Auction Open</li>
+          <li class='list-group-item'>Current Bid: {{current_bid.bid}}</li>
+
+          {% endif %}
+        </ul>
+        {% if listing.creator == request.user %}
+        <a href="{% url 'close_auction' listing.id %}" class="btn btn-secondary">Close Auction</a>
+        {% endif %}
+
+        </div>
+
+        {% if current_bid.winner == False or current_bid == None and listing.creator != request.user %}
+        <div class="card my-2">
+        <div class="card-body bg-info text-white">
+        <h5 class="card-title">Place a Bid</h5>
+        </div>
+
+        <form class="" action="{% url 'bid' listing.id %}" method="post">
+          {% csrf_token %}
+          {{bid_form}}
+          <input type="submit" value="Place Bid">
+        </form>
+        </div>
+        {% endif %}
+
+
+
+        <div class="card my-2">
+        <div class="card-body bg-info text-white">
+        <h5 class="card-title">Comments</h5>
+        </div>
+        {% for comment in comments %}
+        <ul class="list-group list-group-flush ">
+          <li class="list-group-item">{{comment.commenter}}: {{comment.comment}}</li>
         {% endfor %}
-      </ul>
-      {% if listing.creator != creator and bid.status == False %}
-      <form class="" action="{% url 'bid' listing.id %}" method="post">
-        {% csrf_token %}
-        {{bid_form.as_p}}
-        <input type="submit" value="Place Bid">
-      </form>
-      {% endif %}
-
-      {% if listing.creator == creator %}
-        <a href="{% url 'close_auction' listing.id %}">Close Auction</a>
-      {% endif %}
-
-      <form class="" action="{% url 'add_comment' listing.id %}" method="post">
-        {% csrf_token %}
-        {{comment_form.as_p}}
-        <input type="submit" value="Add Comment">
-      </form>
-
-      <a href="{% url 'add_watchlist' listing.id %}">Add to Watchlist</a>
-      <a href="{% url 'remove_watchlist' listing.id %}">Remove from Watchlist</a>
-
-
-    </div>
+        <div class="form-group">
+          <form class="" action="{% url 'add_comment' listing.id %}" method="post">
+            {% csrf_token %}
+            {{comment_form.as_p}}
+            <input type="submit" value="Post Comment">
+          </form>
+        </div>
+        </div>
 
 {% endblock %}
