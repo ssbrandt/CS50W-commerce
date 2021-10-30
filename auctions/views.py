@@ -11,6 +11,11 @@ from .forms import ListingForm, BidForm, CommentForm
 @login_required(login_url='login')
 def index(request):
     active_listings = Listing.objects.filter(status=True)
+    for current_listing in active_listings:
+        if Bid.objects.filter(listing=current_listing):
+            current_listing.current_bid = Bid.objects.filter(listing=current_listing.id).latest()
+        else:
+            current_listing.current_bid = None
     context = {'active_listings': active_listings}
     return render(request, "auctions/index.html", context)
 

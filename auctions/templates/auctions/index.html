@@ -16,8 +16,15 @@
               {% if listing.listing_image %}
               <img src={{listing.listing_image}} class="card-img-top">
               {% endif %}
-              <li class="list-group-item">Starting Bid: {{listing.starting_bid}}</li>
+              {% if listing.category %}
               <li class="list-group-item">Category: {{listing.category}}</li>
+              {% endif %}
+              <li class="list-group-item">Starting Bid: {{listing.starting_bid}}</li>
+              {% if listing.current_bid.bid %}
+              <li class="list-group-item">Current Bid: {{listing.current_bid.bid}}</li>
+              {% else %}
+              <li class="list-group-item">Current Bid: No Bids</li>
+              {%endif%}
             </ul>
           </div>
           <a href="listing/{{listing.id}}" class="stretched-link"></a>
