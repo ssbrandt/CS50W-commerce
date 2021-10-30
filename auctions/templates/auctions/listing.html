@@ -59,7 +59,7 @@
         <form class="" action="{% url 'bid' listing.id %}" method="post">
           {% csrf_token %}
           {{bid_form}}
-          <input type="submit" value="Place Bid">
+          <input type="submit" value="Place Bid" class="btn btn-secondary">
         </form>
         </div>
         {% endif %}
@@ -78,7 +78,7 @@
           <form class="" action="{% url 'add_comment' listing.id %}" method="post">
             {% csrf_token %}
             {{comment_form.as_p}}
-            <input type="submit" value="Post Comment">
+            <input type="submit" value="Post Comment" class="btn btn-secondary">
           </form>
         </div>
         </div>

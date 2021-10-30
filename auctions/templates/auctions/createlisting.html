@@ -11,7 +11,7 @@
 
 
   <form action="{% url 'create_listing'%}" method="post">
-    <table class="tabel table-borderless">
+    <table class="table-borderless">
       {% csrf_token %}
       {{form.as_table}}
       </table>
