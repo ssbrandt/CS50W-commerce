@@ -1,14 +1,23 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-    <h2>Create New Listing</h2>
+<div class="card my-2">
+  <div class="card-body bg-info text-white" >
+  <h5 class="card-title">Create a New Listing</h5>
 
-    <form action="{% url 'create_listing'%}" method="post">
+  </div>
+
+
+
+
+  <form action="{% url 'create_listing'%}" method="post">
+    <table class="tabel table-borderless">
       {% csrf_token %}
-      {{form.as_p}}
-      <input type="submit" value="Create">
-
+      {{form.as_table}}
+      </table>
+      <input type="submit" value="Create" class="btn btn-secondary">
     </form>
 
 
+</div>
 {% endblock %}
