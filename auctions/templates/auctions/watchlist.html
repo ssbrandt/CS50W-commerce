@@ -21,7 +21,7 @@
               <li class="list-group-item">Category: {{listing.category}}</li>
             </ul>
           </div>
-          <a href="listing/{{listing.id}}" class="stretched-link"></a>
+          <a href="{% url 'listing' listing.id %}" class="stretched-link"></a>
         </div>
         {% endfor %}
     </div>
