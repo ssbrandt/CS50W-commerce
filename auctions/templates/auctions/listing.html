@@ -2,8 +2,10 @@
 
 {% block body %}
 
-    {% if message %}
-        <div>{{ message }}</div>
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-danger" role="alert">{{ message }}</div>
+      {%endfor%}
     {% endif %}
       <div class="card my-2">
         <div class="card-body bg-info text-white" >

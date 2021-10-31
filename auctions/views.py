@@ -2,8 +2,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.contrib import messages
 
 from .models import User, Listing, Bid, Comment, Watchlist
 from .forms import ListingForm, BidForm, CommentForm
@@ -130,11 +131,14 @@ def bid(request, listing_id):
             form.save()
             return HttpResponseRedirect(reverse("listing", args=(listing_id,)))
         else:
-            form = BidForm(request.POST)
+            form = BidForm()
             listing = Listing.objects.get(id=listing_id)
-            message = 'Bid must be greater than or equal to starting bid and higher then current bid.'
-            context = {'form': form, 'listing':listing, 'message':message}
-            return render(request, "auctions/listing.html", context)
+            # message = 'Bid must be greater than or equal to starting bid and higher then current bid.'
+            # context = {'form': form, 'listing':listing, 'message':message}
+            messages.error(request,'Bid must be greater than or equal to starting bid and higher then current bid.')
+            context = {'form': form, 'listing':listing}
+            return HttpResponseRedirect(reverse("listing", args=(listing_id,)))
+            # return render(request, "auctions/listing.html", context)
 
 @login_required(login_url='login')
 def add_comment(request, listing_id):
