@@ -31,12 +31,12 @@
         </div>
         <ul class="list-group list-group-flush ">
           <li class="list-group-item">Starting Bid: {{listing.starting_bid}}</li>
-          {% if current_bid.winner == True %}
+          {% if listing.status == False and current_bid.winner == True %}
           <li class='list-group-item'>Auction Closed</li>
           <li class='list-group-item'>Winning Bid: {{current_bid.bid}}</li>
           <li class='list-group-item'>Congratulations: {{current_bid.bidder}}</li>
 
-          {% elif current_bid == None %}
+          {% elif listing.status == True and current_bid == None %}
           <li class='list-group-item'>Auction Open</li>
           <li class='list-group-item'>Current Bid: No existing bids </li>
 
@@ -46,13 +46,13 @@
 
           {% endif %}
         </ul>
-        {% if listing.creator == request.user %}
+        {% if listing.creator == request.user and listing.status == True %}
         <a href="{% url 'close_auction' listing.id %}" class="btn btn-secondary">Close Auction</a>
         {% endif %}
 
         </div>
 
-        {% if current_bid.winner == False or current_bid == None and listing.creator != request.user %}
+        {% if listing.status == True and listing.creator != request.user %}
         <div class="card my-2">
         <div class="card-body bg-info text-white">
         <h5 class="card-title">Place a Bid</h5>
