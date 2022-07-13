@@ -36,6 +36,10 @@
           <li class='list-group-item'>Winning Bid: {{current_bid.bid}}</li>
           <li class='list-group-item'>Congratulations: {{current_bid.bidder}}</li>
 
+          {% elif listing.status == False %}
+          <li class='list-group-item'>Auction Closed</li>
+          <li class='list-group-item'>No bids placed</li>
+
           {% elif listing.status == True and current_bid == None %}
           <li class='list-group-item'>Auction Open</li>
           <li class='list-group-item'>Current Bid: No existing bids </li>

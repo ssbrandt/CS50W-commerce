@@ -206,8 +206,9 @@ def close_auction(request, listing_id):
     listing.status = False
     listing.save()
     #set winner to true for bid
-    winning_bid = Bid.objects.filter(listing=listing_id).latest()
-    winning_bid.winner = True
-    winning_bid.save()
+    if Bid.objects.filter(listing=listing_id):
+        winning_bid = Bid.objects.filter(listing=listing_id).latest()
+        winning_bid.winner = True
+        winning_bid.save()
 
     return HttpResponseRedirect(reverse("listing", args=(listing_id,)))
